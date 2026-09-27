@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HANIN'S PERSONAL ASSISTANT v5.0</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        h1 { color: #00ffcc; margin-bottom: 5px; }
+        h3 { color: #ff007f; margin-bottom: 20px; }
+        .btn {
+            background: linear-gradient(45deg, #ff007f, #7928ca);
+            color: white;
+            border: none;
+            padding: 12px;
+            margin: 8px 0;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn:hover { opacity: 0.9; }
+        #result {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(0,0,0,0.4);
+            border-radius: 8px;
+            color: #ffeb3b;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1>HANINCRAFT</h1>
+    <h3>HANIN'S PERSONAL ASSISTANT v5.0</h3>
+    <p>Hello, Hanin! Welcome to your personal workspace.<br><b>What would you like to do today?</b></p>
+    <br>
+    <button class="btn" onclick="show('Calculator')">[1] Calculator</button>
+    <button class="btn" onclick="show('Convert Units')">[2] Convert Units</button>
+    <button class="btn" onclick="show('Quick Questions')">[3] Quick Questions</button>
+    <button class="btn" onclick="show('About Me')">[4] About Me</button>
+    <button class="btn" style="background:#ff416c" onclick="show('Exit')">[5] Exit</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+    function show(text) {
+        var res = document.getElementById('result');
+        res.style.display = 'block';
+        if(text === 'Exit') {
+            res.innerHTML = "Goodbye, Hanin! Have a great day! 👋";
+        } else {
+            res.innerHTML = "Selected: " + text;
+        }
+    }
+</script>
+
+</body>
+</html>
