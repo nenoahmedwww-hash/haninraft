@@ -1,81 +1,201 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HANIN'S PERSONAL ASSISTANT v5.0</title>
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
         body {
             background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
             color: #fff;
-            font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
             padding: 20px;
         }
-        .card {
+
+        .container {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            border-radius: 15px;
+            border-radius: 20px;
             padding: 25px;
-            max-width: 400px;
+            max-width: 420px;
             width: 100%;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             text-align: center;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            border: 1px solid rgba(255, 255, 255, 0.18);
         }
-        h1 { color: #00ffcc; margin-bottom: 5px; }
-        h3 { color: #ff007f; margin-bottom: 20px; }
-        .btn {
+
+        h1 {
+            color: #00ffcc;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px #00ffcc;
+        }
+
+        .subtitle {
+            color: #ff007f;
+            font-weight: bold;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+
+        .welcome {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            border-left: 4px solid #00ffcc;
+        }
+
+        .menu-btn {
             background: linear-gradient(45deg, #ff007f, #7928ca);
             color: white;
             border: none;
             padding: 12px;
-            margin: 8px 0;
+            margin: 6px 0;
             width: 100%;
-            border-radius: 8px;
-            font-size: 16px;
+            border-radius: 10px;
+            font-size: 0.95rem;
             font-weight: bold;
             cursor: pointer;
         }
-        .btn:hover { opacity: 0.9; }
-        #result {
-            margin-top: 15px;
-            padding: 10px;
-            background: rgba(0,0,0,0.4);
-            border-radius: 8px;
-            color: #ffeb3b;
+
+        .panel {
             display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            text-align: left;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .calc-btn {
+            background: #00ffcc;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .res-box {
+            margin-top: 10px;
+            color: #ffeb3b;
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
-<div class="card">
+<div class="container">
     <h1>HANINCRAFT</h1>
-    <h3>HANIN'S PERSONAL ASSISTANT v5.0</h3>
-    <p>Hello, Hanin! Welcome to your personal workspace.<br><b>What would you like to do today?</b></p>
-    <br>
-    <button class="btn" onclick="show('Calculator')">[1] Calculator</button>
-    <button class="btn" onclick="show('Convert Units')">[2] Convert Units</button>
-    <button class="btn" onclick="show('Quick Questions')">[3] Quick Questions</button>
-    <button class="btn" onclick="show('About Me')">[4] About Me</button>
-    <button class="btn" style="background:#ff416c" onclick="show('Exit')">[5] Exit</button>
+    <div class="subtitle">HANIN'S PERSONAL ASSISTANT v5.0</div>
 
-    <div id="result"></div>
+    <div class="welcome">
+        Hello, Hanin! Welcome to your personal workspace.<br>
+        <strong>What would you like to do today?</strong>
+    </div>
+
+    <button class="menu-btn" onclick="openSection('calc')">[1] Calculator</button>
+    <button class="menu-btn" onclick="openSection('convert')">[2] Convert Units</button>
+    <button class="menu-btn" onclick="openSection('questions')">[3] Quick Questions</button>
+    <button class="menu-btn" onclick="openSection('about')">[4] About Me</button>
+    <button class="menu-btn" style="background: #ff416c;" onclick="openSection('exit')">[5] Exit</button>
+
+    <!-- الحاسبة -->
+    <div id="calc" class="panel">
+        <h3 style="color:#00ffcc; text-align:center;">Calculator</h3>
+        <input type="number" id="num1" placeholder="Enter first number">
+        <select id="op">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+        <input type="number" id="num2" placeholder="Enter second number">
+        <input type="button" class="calc-btn" value="Calculate" onclick="calculate()">
+        <div id="calcRes" class="res-box"></div>
+    </div>
+
+    <!-- تحويل الوحدات -->
+    <div id="convert" class="panel">
+        <h3 style="color:#00ffcc; text-align:center;">Convert Meters to KM</h3>
+        <input type="number" id="meters" placeholder="Enter Meters">
+        <input type="button" class="calc-btn" value="Convert" onclick="convertUnit()">
+        <div id="convertRes" class="res-box"></div>
+    </div>
+
+    <!-- أسئلة سريعة -->
+    <div id="questions" class="panel">
+        <h3 style="color:#00ffcc; text-align:center;">Quick Questions</h3>
+        <p style="margin-top:10px;">Q: Who made this app?<br><strong style="color:#ffeb3b;">A: Hanin!</strong></p>
+    </div>
+
+    <!-- نبذة -->
+    <div id="about" class="panel">
+        <h3 style="color:#00ffcc; text-align:center;">About Me</h3>
+        <p style="margin-top:10px; text-align:center;">Hanin's Personal Assistant v5.0<br>Built with love ❤️</p>
+    </div>
+
+    <!-- خروج -->
+    <div id="exit" class="panel">
+        <p style="text-align:center; color:#ffeb3b;">Goodbye, Hanin! Have a great day! 👋</p>
+    </div>
 </div>
 
 <script>
-    function show(text) {
-        var res = document.getElementById('result');
-        res.style.display = 'block';
-        if(text === 'Exit') {
-            res.innerHTML = "Goodbye, Hanin! Have a great day! 👋";
+    function openSection(id) {
+        document.querySelectorAll('.panel').forEach(p => p.style.display = 'none');
+        document.getElementById(id).style.display = 'block';
+    }
+
+    function calculate() {
+        let n1 = parseFloat(document.getElementById('num1').value);
+        let n2 = parseFloat(document.getElementById('num2').value);
+        let op = document.getElementById('op').value;
+        let res = 0;
+
+        if (isNaN(n1) || isNaN(n2)) {
+            document.getElementById('calcRes').innerText = "Please enter numbers!";
+            return;
+        }
+
+        if (op === '+') res = n1 + n2;
+        else if (op === '-') res = n1 - n2;
+        else if (op === '*') res = n1 * n2;
+        else if (op === '/') res = n2 !== 0 ? n1 / n2 : "Cannot divide by 0";
+
+        document.getElementById('calcRes').innerText = "Result = " + res;
+    }
+
+    function convertUnit() {
+        let m = parseFloat(document.getElementById('meters').value);
+        if (isNaN(m)) {
+            document.getElementById('convertRes').innerText = "Enter valid number!";
         } else {
-            res.innerHTML = "Selected: " + text;
+            document.getElementById('convertRes').innerText = m + " Meters = " + (m / 1000) + " KM";
         }
     }
 </script>
